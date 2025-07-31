@@ -35,8 +35,10 @@ tokenizer_glycobert = hf_hub_download(repo_id="CABSEL/glycobert", filename="MSTo
 sys.path.append(os.path.dirname(tokenizer_glycobert))
 from MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
 
-
-glycan_path = 'glycans_3590.pkl'
+glycan_path = os.path.join(os.path.dirname(__file__), "glycans_3590.pkl")
+with open(glycan_path, "rb") as f:
+    glycans_list = pickle.load(f)
+#glycan_path = 'glycans_3590.pkl'
 glycans_list = pickle.load(open(glycan_path, 'rb'))
 
 
