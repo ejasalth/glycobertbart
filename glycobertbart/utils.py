@@ -987,7 +987,7 @@ def domain_filter_modified_bart(df_out, glycan_class='N', mode='negative', modif
     return df_out[df_out['predictions'].apply(lambda x: 'remove' not in x[:1])]
 
 
-def glycobert_inference(filepath, vocab_path = vocab_path_glycobert, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
+def glycobert_inference(filepath, vocab_path = vocab_path_glycobert, modelDir = 'CABSEL/glycobert', batch_size=256, filename='unspecified', lc='PGC', mode='negative',
                            modification='reduced', glycan_type='N', trap='linear', ionization='other_ion', fragmentation='CID',
                            taxonomy_level='Class', taxonomy_filter = 'Mammalia', df_use = None, mass_tolerance = 0.5, mass_tag = None,
                            filter_out = {'Ac','Kdn', 'P', 'HexA', 'Pen', 'HexN', 'Me', 'PCho', 'PEtN'}, glycan_pkl = glycan_path, device = device):
@@ -1214,7 +1214,7 @@ def filter_glycans_glycobert(df_out, glycan_class='N', modification='reduced', m
     return df_filtered, df_before_deduplication
 
 
-def glycobart_inference(filepath, vocab_path  = vocab_path_glycobart, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
+def glycobart_inference(filepath, vocab_path  = vocab_path_glycobart, modelDir = 'CABSEL/glycobart', batch_size=256, filename='unspecified', lc='PGC', mode='negative',
                         modification='reduced', glycan_type='N', trap='linear', ionization='other_ion', fragmentation='CID',
                         taxonomy_level='Class', taxonomy_filter = 'Mammalia', df_use = None, num_beam = 32, num_return = 32,
                         filter_out = {'Ac','Kdn', 'P', 'HexA', 'Pen', 'HexN', 'Me', 'PCho', 'PEtN'}, glycan_pkl = glycan_path,
