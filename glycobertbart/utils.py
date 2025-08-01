@@ -30,10 +30,7 @@ from glycowork.motif.tokenization import (composition_to_mass,
                                           mz_to_composition)
 from glycowork.glycan_data.loader import df_glycan
 from glycowork.motif.draw import GlycoDraw
-#from huggingface_hub import hf_hub_download
-#tokenizer_glycobert = hf_hub_download(repo_id="CABSEL/glycobert", filename="MSTokenizer.py")
-#sys.path.append(os.path.dirname(tokenizer_glycobert))
-#from MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
+from candycrunch.analysis import *
 
 glycan_path = os.path.join(os.path.dirname(__file__), "glycans_3590.pkl")
 with open(glycan_path, "rb") as f:
