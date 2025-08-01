@@ -18,7 +18,7 @@ import torch
 from torch.utils.data import TensorDataset, DataLoader
 from math import ceil
 from transformers import BertConfig,  BertForSequenceClassification, BartForConditionalGeneration
-#from MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
+from glycobertbart.MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
 import time
 import ast
 from collections import defaultdict, Counter
@@ -30,17 +30,18 @@ from glycowork.motif.tokenization import (composition_to_mass,
                                           mz_to_composition)
 from glycowork.glycan_data.loader import df_glycan
 from glycowork.motif.draw import GlycoDraw
-from huggingface_hub import hf_hub_download
-tokenizer_glycobert = hf_hub_download(repo_id="CABSEL/glycobert", filename="MSTokenizer.py")
-sys.path.append(os.path.dirname(tokenizer_glycobert))
-from MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
+#from huggingface_hub import hf_hub_download
+#tokenizer_glycobert = hf_hub_download(repo_id="CABSEL/glycobert", filename="MSTokenizer.py")
+#sys.path.append(os.path.dirname(tokenizer_glycobert))
+#from MSTokenizer import GlycoBertTokenizer, GlycoBartTokenizer
 
 glycan_path = os.path.join(os.path.dirname(__file__), "glycans_3590.pkl")
 with open(glycan_path, "rb") as f:
     glycans_list = pickle.load(f)
-#glycan_path = 'glycans_3590.pkl'
 glycans_list = pickle.load(open(glycan_path, 'rb'))
 
+vocab_path_glycobert = os.path.join(os.path.dirname(__file__), "vocab_glycobert.json")
+vocab_path_glycobart = os.path.join(os.path.dirname(__file__), "vocab_glycobart.json")
 
 # Set device
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -986,7 +987,7 @@ def domain_filter_modified_bart(df_out, glycan_class='N', mode='negative', modif
     return df_out[df_out['predictions'].apply(lambda x: 'remove' not in x[:1])]
 
 
-def glycobert_inference(filepath, vocab_path, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
+def glycobert_inference(filepath, vocab_path = vocab_path_glycobert, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
                            modification='reduced', glycan_type='N', trap='linear', ionization='other_ion', fragmentation='CID',
                            taxonomy_level='Class', taxonomy_filter = 'Mammalia', df_use = None, mass_tolerance = 0.5, mass_tag = None,
                            filter_out = {'Ac','Kdn', 'P', 'HexA', 'Pen', 'HexN', 'Me', 'PCho', 'PEtN'}, glycan_pkl = glycan_path, device = device):
@@ -1213,7 +1214,7 @@ def filter_glycans_glycobert(df_out, glycan_class='N', modification='reduced', m
     return df_filtered, df_before_deduplication
 
 
-def glycobart_inference(filepath, vocab_path, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
+def glycobart_inference(filepath, vocab_path  = vocab_path_glycobart, modelDir, batch_size=256, filename='unspecified', lc='PGC', mode='negative',
                         modification='reduced', glycan_type='N', trap='linear', ionization='other_ion', fragmentation='CID',
                         taxonomy_level='Class', taxonomy_filter = 'Mammalia', df_use = None, num_beam = 32, num_return = 32,
                         filter_out = {'Ac','Kdn', 'P', 'HexA', 'Pen', 'HexN', 'Me', 'PCho', 'PEtN'}, glycan_pkl = glycan_path,
