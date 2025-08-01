@@ -10,13 +10,13 @@ setup(
     packages=find_packages(),
 
 install_requires=[
-        "CandyCrunch[draw]==0.6.0",
+        "CandyCrunch==0.6.0",
         "glycowork~=1.6.1",
         "torch>2.1,",
         "transformers>=4.50.0,<5.0.0",
         "pandas",
         "numpy",
-        "pyopenms~=3.4",
+        "pyopenms~=3.4"
     ],
     
     include_package_data=True,
