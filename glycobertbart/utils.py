@@ -1046,9 +1046,9 @@ def glycobert_inference(filepath, vocab_path = vocab_path_glycobert, modelDir = 
 
     # Tokenize the sentences
     sentences_tensor = tokenizer.encode(sentences)
-
-    # Load the trained model
-    config = BertConfig.from_pretrained(modelDir)
+    
+    # Load the trained model                                                          
+    #config = BertConfig.from_pretrained(modelDir)
     model = BertForSequenceClassification.from_pretrained(modelDir).to(device)
 
     # Load input IDs and attention masks
